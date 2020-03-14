@@ -1,0 +1,87 @@
+* { box-sizing: border-box; }
+html, body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background-image: url(https://source.unsplash.com/h8I8qxHsXfU/2000);
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+}
+a {
+	color: inherit;
+}
+.name {
+	position: relative;
+	width: 100vw;
+	clip: rect(auto, auto, auto, auto);
+	background: rgba(0, 0, 0, .3);
+}
+.name h1 {
+	font-size: 9em;
+	position: fixed;
+	top: 5vh;
+	margin: 0;
+	padding-top: 1em;
+}
+.name h1 .first { color: rgba(240, 255, 255, .7); }
+.eng.name {
+	font-variant: small-caps;
+	height: 95vh;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 100%, 0  50%);
+}
+.eng.name h1 {
+	right: 5vw;
+}
+.chn.name {
+	min-height: 100vh;
+	clip-path: polygon(0 0, 50% 0, 100% 50%, 100% 100%, 0 100%);
+	padding: 25vh 5vw 5vh 5vw;
+}
+.chn.name h1 {
+	color: black;
+	left: 5vw;
+}
+
+.content {
+	color: rgba(240, 255, 255, .6);
+}
+
+.my-links {
+	filter: invert(.6);
+}
+.my-links a, .my-links img {
+	width: 2em;
+	height: 2em;
+}
+
+.friend-links * {
+	vertical-align: middle;
+}
+.friend-links img {
+	margin-left: 1em;
+	width: 1em;
+	height: 1em;
+}
+.friend-links img:first-child {
+	margin-left: 0;
+}
+
+.footer {
+	color: rgba(240, 255, 255, .4);
+	position: absolute;
+	bottom: 0;
+}
+.footer p {
+	margin: 0;
+}
+
+@media(max-width: 768px) {
+	body {
+		background-position: bottom;
+	}
+	.name h1 {
+		font-size: 4em;
+	}
+}
