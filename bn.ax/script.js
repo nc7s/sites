@@ -43,7 +43,7 @@
 				case 'mouseup':
 				case 'touchend':
 					this.hasInput = false
-					if(this.state == 'unveiled') { return }
+					if(this.state != 'inProgress') { return }
 					if(this.linear.a * this.pointedAt.x + this.linear.b > this.pointedAt.y) {
 						window.requestAnimationFrame(this._boundAnimateAfterUnveil)
 					} else {
