@@ -1,0 +1,17 @@
+== Hello, I'm Blair Noctis.
+
+I'm largely a self-taught & self-driven developer, because I love to create useful, good things.
+
+I use mostly Python when programming, with growing interest in Rust. TypeScript is preferred when writing Web stuff for its efficiency and elegance.
+Here is my https://github.com/Noctfied[GitHub profile]. There's nothing much for now,
+but I'm working on changing that.
+
+When not programming, I read books, play games, eat things, and watch films.
+
+Books are an important part of my life. Talk is cheap, books are concentrated.
+
+My favorite game is Watch_Dogs. You can find me https://steamcommunity.com/id/noctfield[on Steam].
+
+You can find my PGP keys https://keybase.io/noctfield[on Keybase].
+Say hello by https://is.gd/contactbn[email] or https://t.me/BlairNoctisPMBot[Telegram].
+

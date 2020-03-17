@@ -2,9 +2,11 @@
 html, body {
 	margin: 0;
 	padding: 0;
-}
-body {
-	background-image: url(https://source.unsplash.com/MlmN7bHBhE4/2000);
+	width: 100%;
+	height: 100%;
+	color: lightgrey;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	background-image: url(https://source.unsplash.com/Ki0dpxd3LGc);
 	background-attachment: fixed;
 	background-size: cover;
 	background-position: center;
@@ -12,76 +14,35 @@ body {
 a {
 	color: inherit;
 }
-.name {
-	position: relative;
-	width: 100vw;
-	clip: rect(auto, auto, auto, auto);
-	background: rgba(0, 0, 0, .3);
-}
-.name h1 {
-	font-size: 9em;
+.veil, .content {
 	position: fixed;
-	top: 5vh;
-	margin: 0;
-	padding-top: 1em;
-}
-.name h1 .first { color: rgba(240, 255, 255, .7); }
-.eng.name {
-	font-variant: small-caps;
-	height: 95vh;
-	clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 100%, 0  50%);
-}
-.eng.name h1 {
-	right: 5vw;
-}
-.chn.name {
-	min-height: 100vh;
-	clip-path: polygon(0 0, 50% 0, 100% 50%, 100% 100%, 0 100%);
-	padding: 25vh 5vw 5vh 5vw;
-}
-.chn.name h1 {
-	color: black;
-	left: 5vw;
-}
-
-.content {
-	color: rgba(240, 255, 255, .6);
-}
-
-.my-links {
-	filter: invert(.6);
-}
-.my-links a, .my-links img {
-	width: 2em;
-	height: 2em;
-}
-
-.friend-links * {
-	vertical-align: middle;
-}
-.friend-links img {
-	margin-left: 1em;
-	width: 1em;
-	height: 1em;
-}
-.friend-links img:first-child {
-	margin-left: 0;
-}
-
-.footer {
-	color: rgba(240, 255, 255, .4);
-	position: absolute;
+	top: 0;
+	right: 0;
 	bottom: 0;
+	left: 0;
 }
-.footer p {
-	margin: 0;
+.veil {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+	clip-path: polygon(0 0, 100% 0, 100% 95%, 95%, 100%, 0 100%);
+	user-select: none;
 }
-
+.veil h1 {
+	font-size: 12vw;
+}
+.content {
+	background-color: rgba(0, 0, 0, .5);
+	clip-path: polygon(0 0);
+	padding: 10vh;
+	font-size: 1.1em;
+}
 @media(max-width: 768px) {
-	body {
-		background-position: bottom;
+	.veil h1 {
+		font-size: 20vw;
 	}
-	.name h1 {
-		font-size: 4em;
+	.content {
+		padding: 5vh;
 	}
 }

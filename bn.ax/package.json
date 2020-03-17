@@ -1,8 +1,5 @@
 {
 	"scripts": {
-		"build": "yarn run pug *.pug"
-	},
-	"dependencies": {
-		"pug-cli": "^1.0.0-alpha6"
+		"build": "node build.js"
 	}
 }
