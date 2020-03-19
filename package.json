@@ -3,6 +3,7 @@
 		"asciidoctor": "^2.1.1",
 		"pug": "^2.0.4",
 		"recursive-readdir": "^2.2.2",
+		"sass": "^1.26.3",
 		"toml": "^3.0.0"
 	}
 }

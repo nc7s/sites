@@ -4,9 +4,12 @@ html
 		meta(charset="utf-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
 		title Blair Noctis
-		link(rel="stylesheet" href="style.css")
-		script(src="script.js" defer)
+		link(rel="stylesheet" href="index.css")
 	body
-		.veil
-			h1 UNVEIL.
-		.content !{content}
+		nav
+			a(href="https://github.com") github
+			a(href="https://colorless.ink") writings
+			a(href="/about") about me
+		.name
+			- for(let c of 'BLAIR_NOCTIS')
+				span= c
