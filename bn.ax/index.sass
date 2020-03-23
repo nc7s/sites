@@ -20,7 +20,8 @@ body
   width: 100%
   height: 100%
   background-color: black
-  font-family: DejaVuSansBook, sans-serif
+  font-family: Roboto, RobotoThin, sans-serif
+  font-weight: lighter
 
 body
   +bg
@@ -29,7 +30,6 @@ nav
   +fixed
   top: 0
   font-size: 1.3em
-  text-transform: uppercase
   height: 3em
   width: 100%
   display: flex
@@ -39,13 +39,13 @@ nav
   background-color: rgba(0, 0, 0, .3)
 
   a
-    font-family: DejaVuSerifBook, serif
+    font-family: inherit
     color: black
     padding: 2px 6px
     background-color: $secondary-color
     text-decoration: none
     
-  a:hover
+    &:hover
       color: $secondary-color-active
 
 .name
@@ -64,19 +64,19 @@ nav
     height: 1em
     text-align: center
   
-.name::before
-  content: ''
-  display: block
-  position: absolute
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
-  +bg
-  clip-path: polygon(0 0, 25% 100%, 50% 0, 75% 100%, 100% 0, 100% 50%, 0 50%)
-  mix-blend-mode: darken
+  &::before
+    content: ''
+    display: block
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    +bg
+    clip-path: polygon(0 0, 25% 100%, 50% 0, 75% 100%, 100% 0, 100% 50%, 0 50%)
+    mix-blend-mode: darken
   
-.name:hover::before
+  &:hover::before
     mix-blend-mode: lighten
 
 .name span::selection, nav span::selection
@@ -90,8 +90,8 @@ nav
     top: calc(50vh - 2em - 4rem)
     left: calc(50vw - 1.5em)
   
-  .name::before
-    clip-path: polygon(0 0, 25% 100%, 50% 0, 75% 100%, 100% 0, 100% 33%, 0 33%)
-  .name:hover::before
-    clip-path: polygon(0 0, 25% 100%, 50% 0, 75% 100%, 100% 0, 100% 33%, 0 33%)
+    &::before
+      clip-path: polygon(0 0, 25% 100%, 50% 0, 75% 100%, 100% 0, 100% 33%, 0 33%)
+    &:hover::before
+      clip-path: polygon(0 0, 25% 100%, 50% 0, 75% 100%, 100% 0, 100% 33%, 0 33%)
 
