@@ -1,0 +1,99 @@
+@font-face {
+	font-family: "Barlow";
+	src: url("./Barlow-Regular.woff2") format("woff2");
+	font-weight: normal;
+}
+@font-face {
+	font-family: "Barlow";
+	src: url("./Barlow-Bold.woff2") format("woff2");
+	font-weight: bold;
+}
+html, body {
+	margin: 0;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	background: fixed url(white-castle-yuri-shwedoff.jpg) center/cover;
+	font-family: Barlow, Helvetica, Arial, sans-serif;
+	color: rgb(0, 0, 0, .7);
+}
+p {
+	margin: 0;
+}
+a, a:visited {
+	color: inherit;
+}
+	main {
+		position: absolute;
+		right: 1.5rem;
+		top: 1.5rem;
+		direction: rtl;
+	}
+	main > * {
+		display: block;
+	}
+		.avatar {
+			width: 8rem;
+			height: 8rem;
+			filter: opacity(70%);
+		}
+		.motto {
+			font-size: 2rem;
+			color: black;
+		}
+		.motto::before {
+			font-size: 1rem;
+			font-family: fontello;
+			vertical-align: top;
+			content: '\f10d'; /* '' */
+		}
+		.motto::after {
+			font-size: 1rem;
+			font-family: fontello;
+			vertical-align: bottom;
+			content: '\f10e'; /* '' */
+		}
+		.links {
+			font-size: 1.5rem;
+			vertical-align: middle;
+		}
+		.key {
+			user-select: all;
+			text-decoration: none;
+			border-bottom: solid 1px grey;
+		}
+	.name {
+		position: fixed;
+		left: .75rem;
+		bottom: .75rem;
+		width: 3.5em;
+		line-height: .8em;
+		font-size: 10em;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+		.name span {
+			width: .7em;
+			display: inline-block;
+			text-align: center;
+		}
+		.name .underline {
+			border-bottom: solid 1rem rgb(0, 0, 0, .5);
+		}
+	.courtesy {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		color: grey;
+		font-size: .9rem;
+	}
+@media screen and (max-width: 1024px) {
+	.name {
+		font-size: 5em;
+	}
+	.courtesy {
+		color: transparent; /* oops. */
+	}
+}
+
