@@ -10,15 +10,21 @@
 	font-weight: bold;
 	font-display: swap;
 }
+* {
+	--text-trans-color: rgb(0, 0, 0, .7);
+}
 html, body {
 	margin: 0;
 	height: 100%;
 	overflow: hidden;
 }
 body {
-	background: fixed url(white-castle-yuri-shwedoff.jpg) center/cover;
 	font-family: Barlow, Helvetica, Arial, sans-serif;
-	color: rgb(0, 0, 0);
+}
+.bgimg {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
 }
 p {
 	margin: 0;
@@ -33,6 +39,7 @@ a, a:visited {
 		position: absolute;
 		right: 1.5rem;
 		top: 1.5rem;
+		color: var(--text-trans-color);
 	}
 	main > * {
 		display: block;
@@ -44,7 +51,7 @@ a, a:visited {
 		}
 		.motto {
 			font-size: 2rem;
-			color: black;
+			color: var(--text-trans-color);
 		}
 		.motto::before {
 			font-size: 1rem;
@@ -67,7 +74,7 @@ a, a:visited {
 			line-height: 2em;
 			user-select: all;
 			text-decoration: none;
-			border-bottom: solid 1px grey;
+			border-bottom: solid 1px var(--text-trans-color);
 		}
 	.name {
 		position: fixed;
@@ -75,6 +82,7 @@ a, a:visited {
 		bottom: .75rem;
 		width: 3.5em;
 		line-height: .8em;
+		color: rgb(0, 0, 0, .7);
 		font-size: 10em;
 		font-weight: bold;
 		text-transform: uppercase;
@@ -85,7 +93,7 @@ a, a:visited {
 			text-align: center;
 		}
 		.name .underline {
-			border-bottom: solid 1rem rgb(0, 0, 0, .5);
+			border-bottom: solid 1rem var(--text-trans-color);
 		}
 	.courtesy {
 		position: absolute;
@@ -97,6 +105,9 @@ a, a:visited {
 @media screen and (max-width: 1024px) {
 	.name {
 		font-size: 5em;
+	}
+	.name .underline {
+		border-bottom: solid .7rem var(--text-trans-color);
 	}
 	.motto {
 		font-size: 1.75rem;
