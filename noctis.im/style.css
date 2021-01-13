@@ -7,6 +7,7 @@
 	font-family: "Barlow";
 	src: url("./Barlow-Bold.woff2") format("woff2");
 	font-weight: bold;
+	font-display: swap;
 }
 html, body {
 	margin: 0;
@@ -16,7 +17,7 @@ html, body {
 body {
 	background: fixed url(white-castle-yuri-shwedoff.jpg) center/cover;
 	font-family: Barlow, Helvetica, Arial, sans-serif;
-	color: rgb(0, 0, 0, .7);
+	color: rgb(0, 0, 0);
 }
 p {
 	margin: 0;
@@ -24,11 +25,13 @@ p {
 a, a:visited {
 	color: inherit;
 }
+.rtl {
+	direction: rtl;
+}
 	main {
 		position: absolute;
 		right: 1.5rem;
 		top: 1.5rem;
-		direction: rtl;
 	}
 	main > * {
 		display: block;
@@ -85,15 +88,22 @@ a, a:visited {
 		position: absolute;
 		right: 0;
 		bottom: 0;
-		color: grey;
+		color: lightgrey;
 		font-size: .9rem;
 	}
 @media screen and (max-width: 1024px) {
 	.name {
 		font-size: 5em;
 	}
+	.motto {
+		font-size: 1.75rem;
+	}
 	.courtesy {
 		color: transparent; /* oops. */
 	}
 }
-
+@media screen {
+	.sr-only {
+		display: none;
+	}
+}
