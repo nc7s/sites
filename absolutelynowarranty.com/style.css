@@ -1,0 +1,137 @@
+@font-face {
+	font-family: "Barlow";
+	src: url("./Barlow-Regular.woff2") format("woff2");
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Barlow";
+	src: url("./Barlow-Bold.woff2") format("woff2");
+	font-weight: bold;
+	font-display: swap;
+}
+
+* {
+	cursor: none;
+	--whiteish: #bbb;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	isolation: isolate;
+}
+
+body *::selection {
+	color: black;
+	background: var(--whiteish);
+}
+
+p {
+	margin: 0;
+}
+
+a, a:visited {
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline dashed;
+}
+
+.bang {
+	width: 120px;
+	height: 120px;
+	position: absolute;
+	transform: rotate(45deg);
+	background: var(--whiteish);
+	font-size: 7rem;
+	color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+	/* The mouse has to start moving to let us know where it is, so we hide it first. */
+	visibility: hidden;
+}
+
+.bang span {
+	transform: rotate(-45deg);
+	user-select: none;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	background: black;
+	color: var(--whiteish);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 90vh;
+	padding-left: 1rem;
+	font-family: Barlow;
+	mix-blend-mode: difference;
+}
+
+.container a:hover {
+	color: black;
+	background: #bbb;
+}
+
+.big-title {
+	font-size: 7rem;
+	line-height: 1em;
+	margin: 0;
+}
+
+.small-note-mark {
+	font-size: 0rem;
+}
+
+.small-note {
+	font-size: 1rem;
+}
+
+.container hr {
+	min-width: 50%;
+	border-top: var(--whiteish) solid 1px;
+	margin-bottom: 2em;
+}
+
+.introduction {
+	font-size: 1.5rem;
+	max-width: 80em;
+}
+
+.introduction blockquote {
+	font-size: 1rem;
+	font-family: Consolas, Courier, monospace;
+}
+
+.strange-link:hover::after {
+	content: " (not yet)";
+}
+
+.contact {
+	margin: 1rem 0;
+	width: fit-content;
+	font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1024px) {
+	.big-title {
+		font-size: 3.5rem;
+	}
+
+	.container hr {
+		min-width: 85%;
+	}
+
+	.introduction {
+		font-size: 1.25rem;
+	}
+}
