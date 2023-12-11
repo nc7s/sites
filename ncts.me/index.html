@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>墨原</title>
+	<style>
+/* 全局 */
+
+@font-face {
+	font-family: --Subsetted-HYWuYouRuiKaiW;
+	src: url("HYWuYouRuiKaiW.subset.woff2");
+}
+
+@font-face {
+	font-family: HYWuYouRuiKaiW;
+	src: local("HYWuYouRuiKaiW"), url("HYWuYouRuiKaiW.woff2");
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	margin: 0 .2em;
+}
+
+a, a:visited {
+	color: inherit;
+	font-family: STKaiti, '楷体';
+}
+
+a:hover, a:active {
+	color: lightgrey;
+}
+
+/* 布局元素 */
+
+:root, body {
+	margin: 0;
+}
+
+body {
+	height: 100%;
+	display: flex;
+}
+
+body > * {
+	margin-top: 20vmin;
+}
+
+body > * + * {
+	margin-left: 8vmin;
+}
+
+header {
+	width: 20%;
+	min-width: 2ic;
+	writing-mode: vertical-rl;
+	overflow: hidden; /* 配合 h1 margin-right 挡住一小条 */
+}
+
+main {
+	width: 80%;
+}
+
+/* 内容元素 */
+
+h1 {
+	font-family: HYWuYouRuiKaiW;
+}
+
+.--font-subset h1 {
+	font-family: --Subsetted-HYWuYouRuiKaiW;
+}
+
+h1 {
+	color: grey;
+	margin-right: -.32em;
+}
+
+h1 .眼 {
+	color: black;
+}
+
+main p {
+	margin-top: 0;
+	font-family: STSong;
+}
+
+p.落款 {
+	margin-top: 3em;
+}
+
+.落款章 {
+	width: 3em;
+	height: 3em;
+}
+	</style>
+</head>
+<body class="--font-subset">
+	<header>
+		<h1><span class="眼">墨</span>寂百籁，<span class="眼">原</span>隐千生。</h1>
+	</header>
+	<main>
+		<p>姓墨名原，字暂时没有；洋名 Blair Noctis，诨名墨鱼。</p>
+		<p>写写画画，玩玩看看，吃吃喝喝。</p><p>胸无点墨，却喜欢咬文嚼字。见识短浅，竟不时指点江山。</p>
+		<p>如有兴趣，可移步<a href="https://github.com/nc7s">代码库</a>或<a href="https://dabr.ca/ncts">絮语</a>。</p>
+		<p>GPG 公钥：<code id="gpg-key">0xC21D9AD423A39727</code>。<a href="index.html.asc.txt">本页签名</a>。</p>
+		<p class="落款"><img class="落款章" src="墨原-圆章.webp" alt=""></p>
+	</main>
+<script>
+</script>
+</body>
+</html>
