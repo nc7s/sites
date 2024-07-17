@@ -8,5 +8,7 @@ uglyURLs = true
 
 [security.exec]
 allow = ['^asciidoctor$']
+# https://stackoverflow.com/q/71186825
+osEnv = ['(?i)^(PATH|GEM_PATH)']
 
 [markup.asciidocExt]
