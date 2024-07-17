@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="{{ or site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+	{{ partial "head.html" . }}
+	<title>{{ block "title" . }}{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s - %s" .Title site.Title }}{{ end }}{{ end }}</title>
+	{{ block "head_extra" . }}<!-- empty -->{{ end }}
+</head>
+<body>
+	<header>
+		{{ block "header" . }}{{ end }}
+	</header>
+	<main {{ block "main-attrs" . }}{{ end }}>
+		{{ block "main" . }}{{ end }}
+		{{ block "main_seal" . }}{{ partial "seal.html" . }}{{ end }}
+	<!-- otherwise flexed to the right  -->
+	</main>
+</body>
+</html>

@@ -1,0 +1,12 @@
+baseURL = 'https://ncts.me/'
+title = '墨原'
+
+languageCode = 'zh-hans'
+defaultContentLanguage = 'zh'
+
+uglyURLs = true
+
+[security.exec]
+allow = ['^asciidoctor$']
+
+[markup.asciidocExt]

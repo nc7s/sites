@@ -1,0 +1,26 @@
+{{ define "title" }}寄己集{{ end }}
+
+{{ define "head_extra" }}
+	{{ partialCached "head/ji.css.html" . }}
+{{ end }}
+
+{{ define "header" }}
+<h1>寄<span class="眼"><a href="/">己</a></span>集</h1>
+{{ end }}
+
+{{ define "main" }}
+	{{ range .Pages }}
+	<article>
+		<h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+		{{ $dateISO := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+		<time datetime="{{ $dateISO }}">{{ $dateISO }}</time>
+		{{ .Summary }}
+	</article>
+	{{ end }}
+	{{ partial "copyright.html" }}
+	<style>
+h2 {
+	margin-bottom: 0;
+}
+	</style>
+{{ end }}

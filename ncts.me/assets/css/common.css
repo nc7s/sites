@@ -14,17 +14,16 @@ a, a:visited {
 	color: inherit;
 }
 
-/* 布局元素 */
+/* 布局 */
 
 :root, body {
 	margin: 0;
-	height: 100%;
+	min-height: 100vh;
 }
 
 body {
 	padding: clamp(1rem, 20vw, 20vh) clamp(1rem, calc((100vw - 80ic) / 2), 34vw);
 	display: flex;
-	font-family: serif, STSong, SongTi, 宋体;
 	font-size: clamp(16px, 1vw, 20px);
 	color: #ddd;
 	background-color: #111;
@@ -49,10 +48,11 @@ main.double-barrel {
 	justify-content: center;
 }
 
-/* 内容元素 */
+/* 内容 */
 
-h1, h2, h3, h4, h5, h6 {
+body, h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
+	font-family: serif, STSong, SongTi, 宋体;
 }
 
 h1 {
@@ -99,6 +99,12 @@ article[lang="en"] a {
 	font-style: italic;
 }
 
+blockquote {
+	margin: auto 0;
+	padding: 0 4rem;
+	border-left: 4px solid #bbb;
+}
+
 p.落款 {
 	margin-top: 4rem;
 }
@@ -110,4 +116,19 @@ p.落款 > * {
 .落款章 {
 	width: 4rem;
 	height: 4rem;
+}
+
+.copyright {
+	margin-top: 16rem;
+}
+
+.copyright p {
+	margin: 0;
+}
+
+.copyright a {
+}
+
+.copyright a .secondary {
+	opacity: .3;
 }
