@@ -1,0 +1,19 @@
++++
+kind = 'page'
+title = '贡献 | Work'
++++
+
+== 贡献 | Work
+
+=== 开源社区 | Open Source Community
+
+* Debian Maintainer (
+https://portfolio.debian.net/result?email=n%40sail.ng&name=Blair+Noctis&openpgpfp=59D84D44CCD0E82647AEDA29C21D9AD423A39727&username=&nonddemail=n%40sail.ng&salsausername=ncts&wikihomepage=BlairNoctis&forumsid=&mode=html[Portfolio]
+,
+https://qa.debian.org/developer.php?login=Blair%20Noctis[DDPO]
+)
+
+=== 代码 | Code
+
+* https://github.com/nc7s[GitHub]
+* https://codeberg.org/ncts[Codeberg]

@@ -1,0 +1,14 @@
+baseURL = 'https://ncts.me/'
+title = '墨原'
+
+languageCode = 'zh-hans'
+defaultContentLanguage = 'zh'
+
+uglyURLs = true
+
+[security.exec]
+allow = ['^asciidoctor$']
+# https://stackoverflow.com/q/71186825
+osEnv = ['(?i)^(PATH|GEM_PATH)']
+
+[markup.asciidocExt]
