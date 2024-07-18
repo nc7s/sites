@@ -12,7 +12,7 @@ sha256sum $FILES_SIGNED | gpg --clearsign | tee public/sums.asc.txt
 cp -r hugo.toml buildpub.sh content static public/
 PUBLIC_FILES=$(cd public/ && ls)
 
-git switch --orphan publish/ncts.me
+git switch publish/ncts.me
 
 (cd ../ && rm -rf $PUBLIC_FILES)
 (cd public/ && mv $PUBLIC_FILES ../../)
