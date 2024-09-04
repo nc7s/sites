@@ -105,6 +105,13 @@ blockquote {
 	border-left: 4px solid #bbb;
 }
 
+code {
+	font-family: Monaco, Consolas, 'Lucida Console', monospace;
+}
+
+
+/* 风格化内容 */
+
 p.落款 {
 	margin-top: 4rem;
 }
