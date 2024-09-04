@@ -72,7 +72,7 @@ h1 .眼 a {
 
 article {
 	padding: 1rem;
-	width: 60ic;
+	width: clamp(20ic, 60ic, 90%);
 }
 
 main.double-barrel article {
