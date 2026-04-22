@@ -1,4 +1,37 @@
-extends base.template.pug
-block head_end
+extends page.template.pug
+block page_head
 	title 原作
-block body
+block page
+	h1 原作
+
+	section
+		h2 Projects
+		dl
+			dt: a(href='https://codeberg.org/nightsail/drft') drft
+			dd A reader for complex diffs and patches.
+
+			dt: a(href='https://codeberg.org/nightsail/dsum') dsum
+			dd A directory checksum tool, akin to sha256sum.
+
+			dt: a(href='https://codeberg.org/ncts/pug-rs') pug-rs
+			dd A Rust library for Pug templates. Adopted as maintainer; rewrite in progress.
+
+			dt: a(href='https://codeberg.org/ncts/whatwesay') whatwesay
+			dd Browser extension that fetches Hacker News, Lobsters, and Lemmy discussions about the current page.
+
+			dt: a(href='https://codeberg.org/nightsail/covo') covo
+			dd A consonant-vocal encoding spec and library.
+
+			dt: a(href='https://codeberg.org/nightsail/ts32') ts32
+			dd A compact 32-bit time encoding spec and library.
+
+			dt: a(href='https://codeberg.org/ncts/activate-web') activate-web
+			dd "Activate Web" watermark for web pages. Tribute to the 
+				a(href="https://github.com/MrGlockenspiel/activate-linux") activate-linux
+				|  satire.
+
+	section
+		h2 Debian Packaging
+		p Packaged various Rust CLI tools for Debian, along with their intermediate library crates.
+			|  Notable ones include atuin, starship, just, mdbook, tealdeer, trippy, xh.
+		p: a(href='https://qa.debian.org/developer.php?login=ncts') Full package list on Debian QA
