@@ -3,7 +3,7 @@ name: Deploy ncts.me
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'ncts.me/**'
       - '.github/workflows/deploy-ncts.yml'
