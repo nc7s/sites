@@ -1,0 +1,28 @@
+extends base.template.pug
+
+block head_end
+	title 墨原
+	link(rel="stylesheet" href="home.css")
+block body
+	#front
+		h1
+			span.yan 墨
+			| 寂百籁，
+			span.yan 原
+			| 隐千生
+			a.yan.dian(href="#main")
+				| 。
+	#main
+		p 写写
+			a(href="/works") 代码
+			| ，侃侃
+			a(href="/ji/") 闲篇
+			| 。往往半夜。
+		h2 Nox crescit, tīr sith.
+		p Blair Noctis. 
+			a(style="font-style: italic;" href="/works") Code
+			|  and 
+			a(style="font-style: italic;" href="/ji") words
+			| , mostly after dark.
+		p.sign
+			img.seal(src="墨原-圆章.webp" alt="印章 | seal")

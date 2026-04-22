@@ -1,0 +1,70 @@
+body {
+	background: linear-gradient(#0c0c0c 80vh, #0d0f13 160vh) no-repeat;
+	background-size: 100% 200vh;
+}
+
+h1 {
+	margin: 0;
+	font-size: 2em;
+}
+
+#front {
+	height: calc(100vh - clamp(1rem, 20vw, 20vh));
+}
+
+#front h1 {
+	font-family: --Subsetted-HYWuYouRuiKaiW;
+	writing-mode: vertical-rl;
+	cursor: default;
+}
+
+#front h1:not(:hover) {
+	color: #171717;
+	transition: color 1.2s ease;
+}
+
+#front h1:hover {
+	color: #a0a0a0;
+	transition: color 0.8s ease;
+}
+
+h1, #front h1 .yan {
+	color: #f0ede8;
+}
+
+#front h1 .dian {
+	color: #6b3030 !important;
+	transition: color 1.2s ease;
+}
+
+#front h1:hover .dian {
+	color: #eb4040 !important;
+	transition: color 0.8s ease;
+}
+
+#main {
+	min-height: calc(100vh - clamp(1rem, 20vw, 20vh));
+	padding-top: clamp(1rem, 20vw, 20vh);
+	text-align: right;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	font-family: Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif;
+	font-size: 1.5rem;
+}
+
+#main p, #main h2 {
+	margin: 1rem 0;
+}
+
+#main h2 {
+	font-family: serif;
+	font-style: italic;
+	font-size: 1.75em;
+}
+
+#main a {
+	text-decoration: revert;
+}

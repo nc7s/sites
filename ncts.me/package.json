@@ -1,0 +1,12 @@
+{
+	"scripts": {
+		"build": "bun build.js",
+		"watch": "bun build.js --watch"
+	},
+	"dependencies": {
+		"chokidar": "^5.0.0",
+		"ignore": "^7.0.5",
+		"markdown-it": "^14.1.1",
+		"pug": "^3.0.4"
+	}
+}

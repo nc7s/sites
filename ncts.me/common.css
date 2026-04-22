@@ -1,0 +1,53 @@
+@font-face {
+	font-family: --Subsetted-HYWuYouRuiKaiW;
+	src: url("HYWuYouRuiKaiW.subset.woff2");
+}
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--body-color: #d8d8d4;
+	--body-background-color: #0d0f13;
+	/* https://zenozeng.github.io/fonts.css/ */
+	--font-stack-serif: Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif;
+}
+
+:root, body {
+	margin: 0;
+	min-height: 100vh;
+	color: var(--body-color);
+	scroll-behavior: smooth;
+}
+
+body {
+	padding: clamp(1rem, 20vw, 20vh) clamp(1rem, calc((100vw - 80ic) / 2), 34vw);
+}
+
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.08;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a, a:hover, a:visited {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+p.sign {
+	margin-top: 8rem;
+}
+
+p.sign > * {
+	vertical-align: middle;
+}
+
+.seal {
+	width: 4rem;
+	height: 4rem;
+}
