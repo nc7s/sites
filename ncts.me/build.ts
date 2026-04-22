@@ -4,7 +4,6 @@ import { watch as _watch } from 'chokidar'
 import ignore from 'ignore'
 import { readdir } from 'node:fs/promises'
 import { lstatSync, Stats } from 'node:fs'
-import { relative } from 'node:path'
 
 const siteConfig = {
 	name: '墨原',
@@ -24,18 +23,25 @@ const templates = {}
 await buildAll()
 isWatching && watch()
 
+function isJiEntry(p: string) {
+	return p.startsWith('ji/') && p !== 'ji/index.pug'
+}
+
 async function buildAll() {
 	const files = (await readdir('.', { recursive: true }))
 		.filter((p) => !ig.ignores(p) && lstatSync(p).isFile())
 	const pages = files.filter(p => p.endsWith('.md') || (p.endsWith('.pug') && !p.endsWith('.template.pug')))
 
-	// build everything not under ji/
-	pages.filter(p => !relative('ji/', p)).forEach(p => build(p, { pages }))
-	// needs a list page, so, its own file listing
-	buildJiList(pages.filter(p => relative('ji/', p)))
+	// build standalone pages (not ji entries, not ji/index.pug which is built by buildJiList)
+	for(const p of pages.filter(p => !isJiEntry(p) && p !== 'ji/index.pug')) {
+		await build(p, { pages })
+	}
+	// ji entries need a list page, so build them together
+	await buildJiList(pages.filter(isJiEntry))
 
-	files.filter(p => resourceExtensions.filter(e => p.endsWith(e)).length !== 0)
-		.map(p => writeToBuildDir(p, Bun.file(p)))
+	for(const p of files.filter(p => resourceExtensions.some(e => p.endsWith(e)))) {
+		await writeToBuildDir(p, Bun.file(p))
+	}
 }
 
 function watch() {
@@ -60,22 +66,29 @@ async function build(path: string, locals?: object) {
 	}
 	console.log('[build]', path)
 
-	const markdown = await Bun.file(path).text()
-	const frontMatter = parseFrontMatter(markdown, lstatSync(path))
+	const raw = await Bun.file(path).text()
+	const [frontMatter, body] = parseMarkdown(raw, lstatSync(path))
 	if(frontMatter.publish === false) {
 		return
 	}
-	const template = getTemplate(frontMatter.template || relative('ji/', path) ? 'ji_entry' : 'base_page')
-	const rendered = template({ ...siteConfig, ...locals, ...frontMatter, content: md.render(markdown) })
-	await Bun.file(path.replace(/\.md$/, '.html'), rendered)
+	const templateName = frontMatter.template || (path.startsWith('ji/') ? 'ji_entry' : 'page')
+	const template = getTemplate(templateName)
+	const content = md.render(body)
+	const rendered = template({ ...siteConfig, ...locals, ...frontMatter, content })
+	await writeToBuildDir(path, rendered)
 }
 
 async function buildJiList(files: string[]) {
 	const template = getTemplate('ji_list')
-	const frontMatters = (await Promise.all(files.map(async(p) => parseFrontMatter(await Bun.file(p).text(), lstatSync(p)))))
-		.filter(m => m.publish !== false)
-	frontMatters.sort((a, b) => a.created < b.created)
-	await writeToBuildDir('ji/index.html', { ...siteConfig, entries: frontMatters})
+	const entries = (await Promise.all(files.map(async (p) => {
+		const [matter] = parseMarkdown(await Bun.file(p).text(), lstatSync(p))
+		matter.path = p.replace(/\.md$/, '')
+		return matter
+	}))).filter(m => m.publish !== false)
+	// newest first
+	entries.sort((a, b) => +new Date(b.date ?? b.created) - +new Date(a.date ?? a.created))
+	const rendered = template({ ...siteConfig, entries })
+	await writeToBuildDir('ji/index.html', rendered)
 }
 
 function getTemplate(name: string) {
@@ -91,21 +104,22 @@ async function writeToBuildDir(originalPath, content) {
 	await Bun.write(buildPath, content)
 }
 
-// A simplified "front matter" parser.
+// Parse a markdown file into [frontMatter, body].
 //
-// - "---" as delimiter
-// - single level `key = value` lines, akin to TOML
-// - parse into Date if key ends with "date" (like "date", "stardate")
-// - parse into number if parsed like one
-// - take "created" (ctime) and "updated" (mtime) from stat if absent
-function parseFrontMatter(markdown: string, stat: Stats) {
-	const lines = markdown.trim().split('\n')
-	const matter = {}
+// Front matter is delimited by "---" lines, with single-level `key = value` pairs (akin to TOML).
+// - Values whose key ends with "date" are parsed as Date
+// - Numeric-looking values are parsed as numbers
+// - "created" and "updated" default to ctime/mtime from stat
+function parseMarkdown(raw: string, stat: Stats): [Record<string, any>, string] {
+	const lines = raw.trim().split('\n')
+	const matter: Record<string, any> = {}
+	let bodyStart = 0
 	let inBlock = false
 
-	for(const line of lines) {
-		if(line.trim() === '---') {
+	for(let i = 0; i < lines.length; i++) {
+		if(lines[i].trim() === '---') {
 			if(inBlock) {
+				bodyStart = i + 1
 				break
 			} else {
 				inBlock = true
@@ -113,9 +127,12 @@ function parseFrontMatter(markdown: string, stat: Stats) {
 			}
 		}
 
-		const delimPos = line.indexOf('=')
-		const key = line.slice(0, delimPos).trim()
-		let value = line.slice(delimPos + 1).trim()
+		if(!inBlock) break
+
+		const delimPos = lines[i].indexOf('=')
+		if(delimPos === -1) continue
+		const key = lines[i].slice(0, delimPos).trim()
+		let value: any = lines[i].slice(delimPos + 1).trim()
 
 		if(key.toLowerCase().endsWith('date')) {
 			value = new Date(value)
@@ -137,5 +154,6 @@ function parseFrontMatter(markdown: string, stat: Stats) {
 		matter.publish = false
 	}
 
-	return matter
+	const body = lines.slice(bodyStart).join('\n').trim()
+	return [matter, body]
 }
