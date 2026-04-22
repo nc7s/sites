@@ -1,0 +1,19 @@
+extends base.template.pug
+
+block head_end
+	link(rel='stylesheet' href='/page.css')
+	link(rel='stylesheet' href='/ji/ji.css')
+	title= title + ' — 寄己集'
+
+block body
+	.ji-layout
+		header
+			h1
+				a(href='/ji/') 寄己集
+		main
+			article
+				header
+					h1= title
+					time(datetime=formatDateISO(date || created))= formatDate(date || created)
+				.content!= content
+			include footer.template.pug

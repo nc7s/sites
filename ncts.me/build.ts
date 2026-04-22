@@ -1,5 +1,6 @@
 import { compileFile, renderFile } from 'pug'
 import markdownit from 'markdown-it'
+import { createHighlighter } from 'shiki'
 import { watch as _watch } from 'chokidar'
 import ignore from 'ignore'
 import { readdir } from 'node:fs/promises'
@@ -17,8 +18,56 @@ const resourceExtensions = ['.css', '.js', '.webp', '.png', '.jpg', '.woff2']
 const isWatching = process.argv.includes('--watch')
 
 const ig = ignore().add(await Bun.file('../.gitignore').text())
-const md = markdownit()
+
+const highlighter = await createHighlighter({
+	themes: ['vitesse-dark'],
+	langs: ['javascript', 'typescript', 'css', 'html', 'bash', 'json', 'rust', 'python', 'markdown'],
+})
+
+const md = markdownit({
+	html: true,
+	highlight: (code, lang) => {
+		if(!lang || !highlighter.getLoadedLanguages().includes(lang)) {
+			return ''
+		}
+		return highlighter.codeToHtml(code, { lang, theme: 'vitesse-dark' })
+	},
+})
+
+/* Wrap images with non-empty alt text in <figure>/<figcaption> */
+md.renderer.rules.image = (tokens, idx) => {
+	const token = tokens[idx]
+	const src = token.attrGet('src')
+	const alt = token.content
+	const title = token.attrGet('title') || ''
+	const img = `<img src="${src}" alt="${alt}"${title ? ` title="${title}"` : ''}>`
+	if(!alt) return img
+	return `<figure>${img}<figcaption>${alt}</figcaption></figure>`
+}
+
 const templates = {}
+
+const chineseMonths = ['一月', '二月', '三月', '四月', '五月', '六月',
+	'七月', '八月', '九月', '十月', '十一月', '十二月']
+const chineseYearDigits = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+
+const templateHelpers = {
+	formatDate: (d: Date | string) => {
+		const date = d instanceof Date ? d : new Date(d)
+		return date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })
+	},
+	formatDateISO: (d: Date | string) => {
+		const date = d instanceof Date ? d : new Date(d)
+		return date.toISOString().slice(0, 10)
+	},
+	chineseYear: (d: Date | string) => {
+		const year = (d instanceof Date ? d : new Date(d)).getFullYear().toString()
+		return year.split('').map(c => chineseYearDigits[+c]).join('')
+	},
+	chineseMonth: (d: Date | string) => {
+		return chineseMonths[(d instanceof Date ? d : new Date(d)).getMonth()]
+	},
+}
 
 await buildAll()
 isWatching && watch()
@@ -32,12 +81,16 @@ async function buildAll() {
 		.filter((p) => !ig.ignores(p) && lstatSync(p).isFile())
 	const pages = files.filter(p => p.endsWith('.md') || (p.endsWith('.pug') && !p.endsWith('.template.pug')))
 
-	// build standalone pages (not ji entries, not ji/index.pug which is built by buildJiList)
-	for(const p of pages.filter(p => !isJiEntry(p) && p !== 'ji/index.pug')) {
+	// build standalone pages
+	for(const p of pages.filter(p => !isJiEntry(p))) {
 		await build(p, { pages })
 	}
-	// ji entries need a list page, so build them together
-	await buildJiList(pages.filter(isJiEntry))
+	// build ji entries individually, then generate the list page
+	const jiEntries = pages.filter(isJiEntry)
+	for(const p of jiEntries) {
+		await build(p, { pages })
+	}
+	await buildJiList(jiEntries)
 
 	for(const p of files.filter(p => resourceExtensions.some(e => p.endsWith(e)))) {
 		await writeToBuildDir(p, Bun.file(p))
@@ -58,7 +111,7 @@ function watch() {
 async function build(path: string, locals?: object) {
 	if(path.endsWith('.pug') && !path.endsWith('.template.pug')) {
 		console.log('[build]', path)
-		return await writeToBuildDir(path, renderFile(path, { ...siteConfig, ...locals }))
+		return await writeToBuildDir(path, renderFile(path, { ...siteConfig, ...templateHelpers, ...locals }))
 	}
 
 	if(!path.endsWith('.md')) {
@@ -74,7 +127,7 @@ async function build(path: string, locals?: object) {
 	const templateName = frontMatter.template || (path.startsWith('ji/') ? 'ji_entry' : 'page')
 	const template = getTemplate(templateName)
 	const content = md.render(body)
-	const rendered = template({ ...siteConfig, ...locals, ...frontMatter, content })
+	const rendered = template({ ...siteConfig, ...templateHelpers, ...locals, ...frontMatter, content })
 	await writeToBuildDir(path, rendered)
 }
 
@@ -82,12 +135,12 @@ async function buildJiList(files: string[]) {
 	const template = getTemplate('ji_list')
 	const entries = (await Promise.all(files.map(async (p) => {
 		const [matter] = parseMarkdown(await Bun.file(p).text(), lstatSync(p))
-		matter.path = p.replace(/\.md$/, '')
+		matter.path = '/' + p.replace(/\.md$/, '')
 		return matter
 	}))).filter(m => m.publish !== false)
 	// newest first
 	entries.sort((a, b) => +new Date(b.date ?? b.created) - +new Date(a.date ?? a.created))
-	const rendered = template({ ...siteConfig, entries })
+	const rendered = template({ ...siteConfig, ...templateHelpers, entries })
 	await writeToBuildDir('ji/index.html', rendered)
 }
 
@@ -136,10 +189,11 @@ function parseMarkdown(raw: string, stat: Stats): [Record<string, any>, string] 
 
 		if(key.toLowerCase().endsWith('date')) {
 			value = new Date(value)
-		}
-		const tryNumber = Number(value)
-		if(!Number.isNaN(tryNumber)) {
-			value = tryNumber
+		} else {
+			const tryNumber = Number(value)
+			if(!Number.isNaN(tryNumber)) {
+				value = tryNumber
+			}
 		}
 		matter[key] = value
 	}

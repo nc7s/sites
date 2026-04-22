@@ -1,0 +1,11 @@
+extends base.template.pug
+
+block head_end
+	link(rel='stylesheet' href='/page.css')
+	block page_head
+
+block body
+	main
+		block page
+	footer
+		include footer.template.pug

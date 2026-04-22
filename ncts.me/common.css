@@ -1,6 +1,6 @@
 @font-face {
 	font-family: --Subsetted-HYWuYouRuiKaiW;
-	src: url("HYWuYouRuiKaiW.subset.woff2");
+	src: url('HYWuYouRuiKaiW.subset.woff2');
 }
 
 * {
@@ -8,25 +8,33 @@
 }
 
 :root {
-	--body-color: #d8d8d4;
-	--body-background-color: #0d0f13;
+	--color-text: #d8d8d4;
+	--color-emphasis: #f0ede8;
+	--color-bg: #0c0c0c;
+	--color-bg-teal: #0d0f13;
 	/* https://zenozeng.github.io/fonts.css/ */
-	--font-stack-serif: Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif;
+	--font-serif: Georgia, 'Nimbus Roman No9 L', 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC',
+		'Source Han Serif CN', STSong, 'AR PL New Sung', 'AR PL SungtiL GB', NSimSun, SimSun, 'TW\-Sung',
+		'WenQuanYi Bitmap Song', 'AR PL UMing CN', 'AR PL UMing HK', 'AR PL UMing TW', 'AR PL UMing TW MBE',
+		PMingLiU, MingLiU, serif;
 }
 
 :root, body {
 	margin: 0;
 	min-height: 100vh;
-	color: var(--body-color);
+	color: var(--color-text);
+	background-color: var(--color-bg-teal);
 	scroll-behavior: smooth;
+	color-scheme: dark;
 }
 
 body {
-	padding: clamp(1rem, 20vw, 20vh) clamp(1rem, calc((100vw - 80ic) / 2), 34vw);
+	font-family: var(--font-serif);
 }
 
+/* SVG noise overlay for matte texture */
 body::after {
-	content: "";
+	content: '';
 	position: fixed;
 	inset: 0;
 	pointer-events: none;
@@ -50,4 +58,8 @@ p.sign > * {
 .seal {
 	width: 4rem;
 	height: 4rem;
+}
+
+.contact {
+	font-size: 1rem;
 }

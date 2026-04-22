@@ -1,0 +1,16 @@
+body {
+	padding: clamp(2rem, 6vh, 6rem) clamp(1rem, calc((100vw - 60ic) / 2), 34vw);
+}
+
+main {
+	line-height: 1.8;
+}
+
+main h1 {
+	color: var(--color-emphasis);
+	margin-bottom: 2rem;
+}
+
+main a {
+	text-decoration: revert;
+}
