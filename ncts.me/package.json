@@ -5,6 +5,7 @@
 	},
 	"dependencies": {
 		"chokidar": "^5.0.0",
+		"feed": "^5.2.1",
 		"ignore": "^7.0.5",
 		"markdown-it": "^14.1.1",
 		"pug": "^3.0.4",

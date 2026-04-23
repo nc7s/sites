@@ -1,6 +1,7 @@
 import { compileFile, renderFile } from 'pug'
 import markdownit from 'markdown-it'
 import { createHighlighter } from 'shiki'
+import { Feed } from 'feed'
 import { watch as _watch } from 'chokidar'
 import ignore from 'ignore'
 import { readdir } from 'node:fs/promises'
@@ -134,14 +135,46 @@ async function build(path: string, locals?: object) {
 async function buildJiList(files: string[]) {
 	const template = getTemplate('ji_list')
 	const entries = (await Promise.all(files.map(async (p) => {
-		const [matter] = parseMarkdown(await Bun.file(p).text(), lstatSync(p))
+		const raw = await Bun.file(p).text()
+		const [matter, body] = parseMarkdown(raw, lstatSync(p))
 		matter.path = '/' + p.replace(/\.md$/, '')
+		matter._body = body
 		return matter
 	}))).filter(m => m.publish !== false)
 	// newest first
 	entries.sort((a, b) => +new Date(b.date ?? b.created) - +new Date(a.date ?? a.created))
+
 	const rendered = template({ ...siteConfig, ...templateHelpers, entries })
 	await writeToBuildDir('ji/index.html', rendered)
+
+	await buildJiFeed(entries.filter(e => e.feed !== false))
+}
+
+async function buildJiFeed(entries: Record<string, any>[]) {
+	const feed = new Feed({
+		title: '寄己集',
+		description: 'Colorless Ink — Blair Noctis',
+		id: siteConfig.baseUrl + '/ji/',
+		link: siteConfig.baseUrl + '/ji/',
+		language: 'zh',
+		author: { name: siteConfig.nameEnglish },
+		copyright: siteConfig.nameEnglish,
+	})
+
+	for(const entry of entries) {
+		const date = new Date(entry.date ?? entry.created)
+		const url = siteConfig.baseUrl + entry.path
+		feed.addItem({
+			title: entry.title,
+			id: url,
+			link: url,
+			date,
+			content: md.render(entry._body),
+		})
+	}
+
+	await Bun.write(buildDir + '/ji/feed.xml', feed.atom1())
+	console.log('[feed]', 'ji/feed.xml')
 }
 
 function getTemplate(name: string) {
@@ -206,6 +239,9 @@ function parseMarkdown(raw: string, stat: Stats): [Record<string, any>, string] 
 	}
 	if(matter.publish === 'false') {
 		matter.publish = false
+	}
+	if(matter.feed === 'false') {
+		matter.feed = false
 	}
 
 	const body = lines.slice(bodyStart).join('\n').trim()
