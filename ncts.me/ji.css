@@ -1,0 +1,240 @@
+/* Slightly more prominent noise for letter-paper feel */
+body::after {
+	opacity: 0.05;
+}
+
+body {
+	padding: clamp(1rem, 20vw, 20vh) clamp(1rem, calc((100vw - 80ic) / 2), 34vw);
+}
+
+/* Shared layout: vertical heading on the left, content to its right */
+.ji-layout {
+	display: flex;
+	gap: 3rem;
+}
+
+.ji-layout > header {
+	flex-shrink: 0;
+}
+
+.ji-layout > header h1 {
+	writing-mode: vertical-rl;
+	font-family: --Subsetted-HYWuYouRuiKaiW;
+	color: var(--color-emphasis);
+	margin: 0;
+	font-size: 2em;
+	cursor: default;
+}
+
+.ji-layout > header h1 a {
+	color: #666;
+}
+
+.ji-layout > header h1 a:hover {
+	color: var(--color-emphasis);
+}
+
+.ji-layout > header h1 rt {
+	color: transparent;
+	transition: color 1.2s ease;
+	writing-mode: horizontal-tb;
+}
+
+.ji-layout > header h1:hover rt {
+	color: var(--color-text);
+	transition: color 0.6s ease;
+}
+
+.ji-layout > main {
+	flex: 1;
+}
+
+.subtitle {
+	color: #666;
+	font-style: italic;
+	margin-top: 0;
+}
+
+/* Entry list: inline flow like unpunctuated classical prose */
+.year {
+	color: var(--color-emphasis);
+	font-weight: bold;
+}
+
+.month {
+	color: #888;
+}
+
+.entry {
+	line-height: 2.2;
+}
+
+.entry .day {
+	color: #666;
+	font-size: 0.85em;
+}
+
+main .entry a {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+main .entry a:hover {
+	text-decoration: underline;
+	text-underline-offset: 0.25em;
+}
+
+/* Entry page */
+article header {
+	margin-bottom: 2rem;
+}
+
+article header h1 {
+	color: var(--color-emphasis);
+}
+
+article header time {
+	color: #666;
+}
+
+article .content {
+	line-height: 1.8;
+}
+
+article .content a {
+	text-decoration: revert;
+}
+
+/* Content headings */
+article .content h2,
+article .content h3,
+article .content h4 {
+	color: var(--color-emphasis);
+	margin-top: 2.5rem;
+	margin-bottom: 0.75rem;
+}
+
+article .content h2 {
+	font-size: 1.4em;
+}
+
+article .content h3 {
+	font-size: 1.2em;
+}
+
+article .content h4 {
+	font-size: 1.05em;
+}
+
+/* Inline code */
+article .content code {
+	background: rgba(255, 255, 255, 0.06);
+	padding: 0.15em 0.35em;
+	border-radius: 3px;
+	font-size: 0.9em;
+}
+
+/* Code blocks (shiki outputs <pre> with inline styles for bg) */
+article .content pre {
+	padding: 1.2em 1.4em;
+	border-radius: 6px;
+	overflow-x: auto;
+	font-size: 0.85em;
+	line-height: 1.6;
+	margin: 1.5rem 0;
+}
+
+/* Reset inline code style inside pre */
+article .content pre code {
+	background: none;
+	padding: 0;
+	border-radius: 0;
+	font-size: inherit;
+}
+
+/* Images and figures */
+article .content img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 4px;
+}
+
+article .content figure {
+	margin: 2rem 0;
+	display: inline-block;
+}
+
+article .content figcaption {
+	color: #888;
+	font-size: 0.85em;
+	margin-top: 0.5rem;
+	text-align: center;
+}
+
+/* Blockquotes */
+article .content blockquote {
+	border-left: 3px solid #333;
+	margin: 1.5rem 0;
+	padding: 0.5rem 1.2rem;
+	color: #999;
+}
+
+article .content blockquote blockquote {
+	margin: 0.75rem 0;
+}
+
+/* Lists */
+article .content ul,
+article .content ol {
+	padding-left: 1.5em;
+	margin: 1rem 0;
+}
+
+article .content li {
+	margin: 0.3rem 0;
+}
+
+article .content li::marker {
+	color: #666;
+}
+
+/* Tables */
+article .content table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 1.5rem 0;
+	font-size: 0.95em;
+}
+
+article .content th,
+article .content td {
+	border: 1px solid #2a2a2a;
+	padding: 0.5em 0.8em;
+	text-align: left;
+}
+
+article .content th {
+	color: var(--color-emphasis);
+	background: rgba(255, 255, 255, 0.03);
+}
+
+/* Horizontal rules */
+article .content hr {
+	border: none;
+	border-top: 1px solid #2a2a2a;
+	margin: 2.5rem 0;
+}
+
+/* Embeds */
+article .content video,
+article .content audio {
+	display: block;
+	max-width: 100%;
+	margin: 1.5rem 0;
+}
+
+/* Bold and emphasis */
+article .content strong {
+	color: var(--color-emphasis);
+}
