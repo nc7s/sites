@@ -1,7 +1,7 @@
 {
 	"scripts": {
-		"build": "bun build.js",
-		"watch": "bun build.js --watch"
+		"build": "bun build.ts",
+		"dev": "bun build.ts --dev"
 	},
 	"dependencies": {
 		"chokidar": "^5.0.0",

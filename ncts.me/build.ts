@@ -16,7 +16,9 @@ const siteConfig = {
 const buildDir = '_build'
 const resourceExtensions = ['.css', '.js', '.webp', '.png', '.jpg', '.woff2']
 
-const isWatching = process.argv.includes('--watch')
+const isDev = process.argv.includes('--dev')
+const host = process.env.HOST || 'localhost'
+const port = Number(process.env.PORT || 7001)
 
 const ig = ignore().add(await Bun.file('../.gitignore').text())
 
@@ -71,7 +73,7 @@ const templateHelpers = {
 }
 
 await buildAll()
-isWatching && watch()
+isDev && dev()
 
 function isJiEntry(p: string) {
 	return p.startsWith('ji/') && p !== 'ji/index.pug'
@@ -98,15 +100,102 @@ async function buildAll() {
 	}
 }
 
-function watch() {
+function dev() {
+	const sseClients = new Set<ReadableStreamDefaultController>()
+
+	function notifyReload() {
+		for(const controller of sseClients) {
+			controller.enqueue('data: reload\n\n')
+		}
+	}
+
+	// Watch for source changes and rebuild
 	_watch('.', {
 		ignored: (path, stats) => path !== '.' && ig.ignores(path),
 		persistent: true
 	})
-		.on('add', build)
-		.on('change', build)
-		.on('ready', () => console.log(`[watch] started`))
-		.on('error', (e) => console.error(`[watch] error: ${e}`))
+		.on('change', async (path) => {
+			// Invalidate cached templates when a template changes
+			if(path.endsWith('.template.pug')) {
+				delete templates[path.replace('.template.pug', '')]
+			}
+			await buildAll()
+			notifyReload()
+		})
+		.on('ready', () => console.log('[dev] watching for changes'))
+
+	const liveReloadScript = `<script>
+new EventSource('/__reload').onmessage = () => location.reload()
+</script>`
+
+	const mimeTypes: Record<string, string> = {
+		'.html': 'text/html',
+		'.css': 'text/css',
+		'.js': 'application/javascript',
+		'.json': 'application/json',
+		'.xml': 'application/xml',
+		'.webp': 'image/webp',
+		'.png': 'image/png',
+		'.jpg': 'image/jpeg',
+		'.woff2': 'font/woff2',
+		'.ico': 'image/x-icon',
+	}
+
+	Bun.serve({
+		host,
+		port,
+		async fetch(req) {
+			const url = new URL(req.url)
+
+			// SSE endpoint for live reload
+			if(url.pathname === '/__reload') {
+				const stream = new ReadableStream({
+					start(controller) {
+						sseClients.add(controller)
+					},
+					cancel(controller) {
+						sseClients.delete(controller)
+					},
+				})
+				return new Response(stream, {
+					headers: {
+						'Content-Type': 'text/event-stream',
+						'Cache-Control': 'no-cache',
+						'Connection': 'keep-alive',
+					},
+				})
+			}
+
+			// Resolve file path: try exact, then /index.html, then .html
+			let filePath = buildDir + url.pathname
+			let file = Bun.file(filePath)
+			if(!await file.exists()) {
+				file = Bun.file(filePath + '/index.html')
+				filePath += '/index.html'
+			}
+			if(!await file.exists()) {
+				file = Bun.file(filePath.replace(/\/index\.html$/, '.html'))
+				filePath = filePath.replace(/\/index\.html$/, '.html')
+			}
+			if(!await file.exists()) {
+				return new Response('404', { status: 404 })
+			}
+
+			const ext = filePath.slice(filePath.lastIndexOf('.'))
+			const contentType = mimeTypes[ext] || 'application/octet-stream'
+
+			// Inject live reload script into HTML responses
+			if(ext === '.html') {
+				let html = await file.text()
+				html = html.replace('</body>', liveReloadScript + '</body>')
+				return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } })
+			}
+
+			return new Response(file, { headers: { 'Content-Type': contentType } })
+		},
+	})
+
+	console.log(`[dev] serving at http://${host}:${port}`)
 }
 
 async function build(path: string, locals?: object) {
