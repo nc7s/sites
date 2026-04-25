@@ -27,15 +27,15 @@ const highlighter = await createHighlighter({
 	langs: ['javascript', 'typescript', 'css', 'html', 'bash', 'json', 'rust', 'python', 'markdown'],
 })
 
-const md = markdownit({
-	html: true,
-	highlight: (code, lang) => {
-		if(!lang || !highlighter.getLoadedLanguages().includes(lang)) {
-			return ''
-		}
-		return highlighter.codeToHtml(code, { lang, theme: 'vitesse-dark' })
-	},
-})
+const md = markdownit({ html: true, highlight: (code, lang) => {
+	if(!lang || !highlighter.getLoadedLanguages().includes(lang)) {
+		return ''
+	}
+	return highlighter.codeToHtml(code, { lang, theme: 'vitesse-dark' })
+}})
+
+/* Plain renderer for feed content (no syntax highlighting) */
+const mdPlain = markdownit({ html: true })
 
 /* Wrap images with non-empty alt text in <figure>/<figcaption> */
 md.renderer.rules.image = (tokens, idx) => {
@@ -258,7 +258,7 @@ async function buildJiFeed(entries: Record<string, any>[]) {
 			id: url,
 			link: url,
 			date,
-			content: md.render(entry._body),
+			content: mdPlain.render(entry._body) || '',
 		})
 	}
 
