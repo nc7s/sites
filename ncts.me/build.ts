@@ -251,6 +251,7 @@ async function buildJiFeed(entries: Record<string, any>[]) {
 	})
 
 	for(const entry of entries) {
+		if(!entry.title) continue
 		const date = new Date(entry.date ?? entry.created)
 		const url = siteConfig.baseUrl + entry.path
 		feed.addItem({
