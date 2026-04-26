@@ -210,7 +210,7 @@ async function build(path: string, locals?: object) {
 	console.log('[build]', path)
 
 	const raw = await Bun.file(path).text()
-	const [frontMatter, body] = parseMarkdown(raw, lstatSync(path))
+	const [frontMatter, body] = parseMarkdown(raw, lstatSync(path), path)
 	if(frontMatter.publish === false) {
 		return
 	}
@@ -225,7 +225,7 @@ async function buildJiList(files: string[]) {
 	const template = getTemplate('ji_list')
 	const entries = (await Promise.all(files.map(async (p) => {
 		const raw = await Bun.file(p).text()
-		const [matter, body] = parseMarkdown(raw, lstatSync(p))
+		const [matter, body] = parseMarkdown(raw, lstatSync(p), p)
 		matter.path = '/' + p.replace(/\.md$/, '')
 		matter._body = body
 		return matter
@@ -251,7 +251,6 @@ async function buildJiFeed(entries: Record<string, any>[]) {
 	})
 
 	for(const entry of entries) {
-		if(!entry.title) continue
 		const date = new Date(entry.date ?? entry.created)
 		const url = siteConfig.baseUrl + entry.path
 		feed.addItem({
@@ -286,7 +285,7 @@ async function writeToBuildDir(originalPath, content) {
 // - Values whose key ends with "date" are parsed as Date
 // - Numeric-looking values are parsed as numbers
 // - "created" and "updated" default to ctime/mtime from stat
-function parseMarkdown(raw: string, stat: Stats): [Record<string, any>, string] {
+function parseMarkdown(raw: string, stat: Stats, path: string): [Record<string, any>, string] {
 	const lines = raw.trim().split('\n')
 	const matter: Record<string, any> = {}
 	let bodyStart = 0
@@ -332,6 +331,10 @@ function parseMarkdown(raw: string, stat: Stats): [Record<string, any>, string] 
 	}
 	if(matter.feed === 'false') {
 		matter.feed = false
+	}
+
+	if(!matter.title) {
+		matter.title = path.replace(/^.*\//, '').replace(/\.\w+$/, '')
 	}
 
 	const body = lines.slice(bodyStart).join('\n').trim()
