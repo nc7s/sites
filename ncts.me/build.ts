@@ -1,5 +1,6 @@
 import { compileFile, renderFile } from 'pug'
 import markdownit from 'markdown-it'
+import footnote from 'markdown-it-footnote'
 import { createHighlighter } from 'shiki'
 import { Feed } from 'feed'
 import { watch as _watch } from 'chokidar'
@@ -32,10 +33,10 @@ const md = markdownit({ html: true, highlight: (code, lang) => {
 		return ''
 	}
 	return highlighter.codeToHtml(code, { lang, theme: 'vitesse-dark' })
-}})
+}}).use(footnote)
 
 /* Plain renderer for feed content (no syntax highlighting) */
-const mdPlain = markdownit({ html: true })
+const mdPlain = markdownit({ html: true }).use(footnote)
 
 /* Wrap images with non-empty alt text in <figure>/<figcaption> */
 md.renderer.rules.image = (tokens, idx) => {
