@@ -105,7 +105,11 @@ function dev() {
 
 	function notifyReload() {
 		for(const controller of sseClients) {
-			controller.enqueue('data: reload\n\n')
+			try {
+				controller.enqueue('data: reload\n\n')
+			} catch {
+				sseClients.delete(controller)
+			}
 		}
 	}
 
@@ -167,7 +171,7 @@ new EventSource('/__reload').onmessage = () => location.reload()
 			}
 
 			// Resolve file path: try exact, then /index.html, then .html
-			let filePath = buildDir + url.pathname
+			let filePath = buildDir + decodeURIComponent(url.pathname)
 			let file = Bun.file(filePath)
 			if(!await file.exists()) {
 				file = Bun.file(filePath + '/index.html')
