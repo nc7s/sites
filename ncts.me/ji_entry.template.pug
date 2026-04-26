@@ -14,7 +14,9 @@ block body
 			article
 				header
 					h1= title
-					time(datetime=formatDateISO(date || created))= formatDate(date || created)
+					- const d = new Date(date || created)
+					time(datetime=formatDateISO(d))
+						= chineseYear(d) + ' ' + chineseMonth(d) + ' ' + d.getDate() + '日'
 					if _translation
 						= ' '
 						a.translation(href=_translation.path)= _translation.lang
