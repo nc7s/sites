@@ -90,8 +90,32 @@ async function buildAll() {
 	}
 	// build ji entries individually, then generate the list page
 	const jiEntries = pages.filter(isJiEntry)
+
+	// Pre-parse ji entries to resolve translation pairs before building
+	const jiMeta = await Promise.all(jiEntries.map(async (p) => {
+		const raw = await Bun.file(p).text()
+		const [matter] = parseMarkdown(raw, lstatSync(p), p)
+		matter.path = '/' + p.replace(/\.md$/, '')
+		matter.lang = matter.lang || 'zh'
+		matter._file = p
+		return matter
+	}))
+	const jiByFile = new Map(jiMeta.map(m => [m._file, m]))
+
+	// Resolve translation links
+	for(const meta of jiMeta) {
+		if(!meta.translation) continue
+		const dir = meta._file.replace(/\/[^/]+$/, '')
+		const targetFile = meta.translation.replace(/^\.\//, dir + '/') + '.md'
+		const counterpart = jiByFile.get(targetFile)
+		if(counterpart) {
+			meta._translation = { title: counterpart.title, path: counterpart.path, lang: counterpart.lang }
+		}
+	}
+
 	for(const p of jiEntries) {
-		await build(p, { pages })
+		const meta = jiByFile.get(p)
+		await build(p, { pages, _translation: meta?._translation })
 	}
 	await buildJiList(jiEntries)
 
@@ -231,13 +255,36 @@ async function buildJiList(files: string[]) {
 		const raw = await Bun.file(p).text()
 		const [matter, body] = parseMarkdown(raw, lstatSync(p), p)
 		matter.path = '/' + p.replace(/\.md$/, '')
+		matter.lang = matter.lang || 'zh'
 		matter._body = body
+		matter._file = p
 		return matter
 	}))).filter(m => m.publish !== false)
+
+	// Resolve translation pairs: attach counterpart metadata, mark secondaries (non-zh)
+	const byFile = new Map(entries.map(e => [e._file, e]))
+	const paired = new Set<string>()
+	for(const entry of entries) {
+		if(!entry.translation || paired.has(entry._file)) continue
+		const dir = entry._file.replace(/\/[^/]+$/, '')
+		const targetFile = entry.translation.replace(/^\.\//, dir + '/') + '.md'
+		const counterpart = byFile.get(targetFile)
+		if(!counterpart) continue
+
+		entry._translation = counterpart
+		counterpart._translation = entry
+		// The non-zh entry becomes secondary (hidden from the list, shown inline)
+		const secondary = entry.lang === 'zh' ? counterpart : entry
+		paired.add(secondary._file)
+	}
+
 	// newest first
 	entries.sort((a, b) => +new Date(b.date ?? b.created) - +new Date(a.date ?? a.created))
 
-	const rendered = template({ ...siteConfig, ...templateHelpers, entries })
+	// Filter out secondary translations from the list (they appear inline with their primary)
+	const listEntries = entries.filter(e => !paired.has(e._file))
+
+	const rendered = template({ ...siteConfig, ...templateHelpers, entries: listEntries })
 	await writeToBuildDir('ji/index.html', rendered)
 
 	await buildJiFeed(entries.filter(e => e.feed !== false))

@@ -15,5 +15,8 @@ block body
 				header
 					h1= title
 					time(datetime=formatDateISO(date || created))= formatDate(date || created)
+					if _translation
+						= ' '
+						a.translation(href=_translation.path)= _translation.lang
 				.content!= content
 			include footer.template.pug

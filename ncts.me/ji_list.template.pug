@@ -45,5 +45,12 @@ block body
 							span.day= entry._date.getDate()
 							= ' '
 							a(href=entry.path)= entry.title
+							if entry._translation
+								= ' '
+								span.lang= entry.lang
+								span.sep  / 
+								a(href=entry._translation.path)= entry._translation.title
+								= ' '
+								span.lang= entry._translation.lang
 							= ' '
 			include footer.template.pug

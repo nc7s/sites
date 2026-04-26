@@ -84,6 +84,25 @@ main .entry a:hover {
 	text-underline-offset: 0.25em;
 }
 
+/* Language tags and separators */
+.lang, .sep {
+	color: #555;
+	font-size: 0.75em;
+	font-style: italic;
+}
+
+/* Translation link on entry page */
+article header .translation {
+	color: #555;
+	font-size: 0.85em;
+	text-decoration: none;
+	margin-left: 0.5em;
+}
+
+article header .translation:hover {
+	color: var(--color-text);
+}
+
 /* Entry page */
 article header {
 	margin-bottom: 2rem;
