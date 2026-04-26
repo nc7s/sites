@@ -28,10 +28,12 @@ body {
 
 .ji-layout > header h1 a {
 	color: #666;
+	transition: color 1.2s ease;
 }
 
 .ji-layout > header h1 a:hover {
 	color: var(--color-emphasis);
+	transition: color 0.8s ease;
 }
 
 .ji-layout > header h1 rt {
