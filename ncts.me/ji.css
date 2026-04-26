@@ -81,7 +81,6 @@ main .entry a {
 
 main .entry a:hover {
 	text-decoration: underline;
-	text-underline-offset: 0.25em;
 }
 
 /* Language tags and separators */

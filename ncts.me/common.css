@@ -45,6 +45,7 @@ body::after {
 a, a:hover, a:visited {
 	color: inherit;
 	text-decoration: inherit;
+	text-underline-offset: 0.25em;
 }
 
 p.sign {
