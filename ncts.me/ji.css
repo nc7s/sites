@@ -109,6 +109,8 @@ article header {
 
 article header h1 {
 	color: var(--color-emphasis);
+	margin-top: 0;
+	line-height: 1;
 }
 
 article header time {
