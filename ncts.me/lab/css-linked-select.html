@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CSS linked select</title>
+	<style>
+#sel-lv2-alpha,
+#sel-lv2-beta,
+#sel-lv2-gamma {
+  display: none;
+}
+
+body:has(#opt-lv1-alpha:checked) #sel-lv2-alpha {
+  display: initial;
+}
+body:has(#opt-lv1-beta:checked) #sel-lv2-beta {
+  display: initial;
+}
+body:has(#opt-lv1-gamma:checked) #sel-lv2-gamma {
+  display: initial;
+}
+	</style>
+  </head>
+  <body>
+    <select id="sel-lv1">
+      <option id="opt-lv1-alpha" value="Alpha">Alpha</option>
+      <option id="opt-lv1-beta" value="Beta">Beta</option>
+      <option id="opt-lv1-gamma" value="Gamma">Gamma</option>
+    </select>
+
+    <select id="sel-lv2-alpha">
+      <option value="One">One</option>
+      <option value="Two">Two</option>
+      <option value="Three">Three</option>
+    </select>
+    <select id="sel-lv2-beta">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+    <select id="sel-lv2-gamma">
+      <option value="I">I</option>
+      <option value="II">II</option>
+      <option value="III">III</option>
+    </select>
+  </body>
+</html>
+
