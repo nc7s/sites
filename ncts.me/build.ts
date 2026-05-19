@@ -15,7 +15,7 @@ const siteConfig = {
 	baseUrl: 'https://ncts.me',
 }
 const buildDir = '_build'
-const resourceExtensions = ['.html', '.css', '.js', '.webp', '.png', '.jpg', '.woff2']
+const resourceExtensions = ['.html', '.css', '.js', '.webp', '.png', '.jpg', '.svg', '.woff2']
 
 const isDev = process.argv.includes('--dev')
 const host = process.env.HOST || 'localhost'
@@ -166,6 +166,7 @@ new EventSource('/__reload').onmessage = () => location.reload()
 		'.webp': 'image/webp',
 		'.png': 'image/png',
 		'.jpg': 'image/jpeg',
+		'.svg': 'image/svg+xml',
 		'.woff2': 'font/woff2',
 		'.ico': 'image/x-icon',
 	}
