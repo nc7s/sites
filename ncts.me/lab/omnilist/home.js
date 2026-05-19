@@ -1,0 +1,136 @@
+function yearName(year) {
+	return year
+		.toString()
+		.split('')
+		.map((d) => '零壹貳叄肆伍六柒捌玖'[d])
+		.join('')
+}
+
+function dayName(day) {
+	day = Number(day)
+	return (
+		['', '十', '廿', '卅'][Math.floor(day / 10)] +
+		[''].concat('一二三四五六七八九十'.split(''))[day % 10]
+	)
+}
+
+const links = [
+	{ label: '主页', url: '/' },
+	{ label: '关于我', url: '/about' },
+]
+
+const articleData = [
+	{
+		title: '思考生活与生命在英语中的区别',
+		date: '2023-02-11',
+		url: '/some',
+	},
+	{
+		title: 'Some random thoughts on Generative AI',
+		date: '2023-02-08',
+		url: '/some',
+	},
+	{
+		title: '《风暴英雄》对我的意义',
+		date: '2023-01-20',
+		url: '/some',
+	},
+	{
+		title: 'The debut of Substance: A HTML-to-Markdown extractor',
+		date: '2023-01-18',
+		url: '/some',
+	},
+	{
+		title: '「荒木型」与「三浦型」创作者',
+		date: '2023-01-13',
+		url: '/some',
+	},
+	{
+		title: '“Moving away from UUIDs”, Really?',
+		date: '2022-11-23',
+		url: '/some',
+	},
+	{
+		title: '离开国产 SaaS',
+		date: '2022-10-29',
+		url: '/some',
+	},
+	{ title: 'Defeat VSCode Tab Bar', date: '2022-10-18', url: '/some' },
+	{
+		title: '真正的好作品只能靠自己去发现',
+		date: '2022-10-10',
+		url: '/some',
+	},
+	{
+		title: '我用过的位置追踪应用',
+		date: '2022-10-07',
+		url: '/some',
+	},
+
+	{
+		title: '浅谈 Chrome Manifest V3 的优缺点',
+		date: '2022-09-29',
+		url: '/some',
+	},
+	{
+		title: '为什么人们在黄图群喜欢聊哲学',
+		date: '2022-09-29',
+		url: '/some',
+	},
+	{ title: '并不乐观的全球化', date: '2022-09-27', url: '/some' },
+	{
+		title: '童年的 Disco',
+		date: '2022-09-26',
+		url: '/some',
+	},
+	{
+		title: 'Kevin Kelly 对创作者的指导',
+		date: '2022-09-26',
+		url: '/some',
+	},
+	{
+		title: 'State of Play September 2022',
+		date: '2022-09-17',
+		url: '/some',
+	},
+	{
+		title: '停不下来的创业者——得知 Figma 被 Adobe 收购有感',
+		date: '2022-09-16',
+		url: '/some',
+	},
+	{
+		title: '大公司为何不愿意做好用的产品？',
+		date: '2022-09-16',
+		url: '/some',
+	},
+	{ title: '我的 10 月新番表', date: '2022-09-14', url: '/some' },
+	{
+		title: '使用 Railway 和 Supabase 零成本搭建 n8n 自动化平台',
+		date: '2022-09-14',
+		url: '/some',
+	},
+	{
+		title: '如何寻找一个分体式键盘理想的租房',
+		date: '2022-09-14',
+		url: '/some',
+	},
+	{ title: '关于 Essays 的说明', date: '2022-09-13', url: '/some' },
+	{ title: '要不要回互联网公司上班？', date: '2022-09-12', url: '/some' },
+	{ title: '2022 年 9 月苹果发布会观后感', date: '2022-09-09', url: '/some' },
+	{ title: '2022 年 7 月和 8 月总结', date: '2022-09-03', url: '/some' },
+]
+
+const organized = articleData.reduce((acc, cur, _) => {
+	const [year, month] = cur.date.split('-').map(Number)
+	if (acc[year] === undefined) {
+		acc[year] = {
+			[month]: [],
+		}
+	}
+	if (acc[year][month] === undefined) {
+		acc[year][month] = []
+	}
+	acc[year][month].push(cur)
+	return acc
+}, {})
+

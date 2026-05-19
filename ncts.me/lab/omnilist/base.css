@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  font-size: 16px;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  background-color: #bbbbb7;
+  /* padding: 0 auto; */
+  word-break: break-all;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Barlow, "Source Han Sans SC", "PingFang SC";
+}
+
+a,
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  /* color: rgba(0, 0, 0, 0.5); */
+  text-decoration: none;
+}
+

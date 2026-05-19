@@ -1,0 +1,92 @@
+.omnilist {
+  /* font-size: 1.5rem; */
+  margin: 15vh auto;
+  margin-left: 10vw;
+  width: 45vw;
+  font-family: Barlow, "Source Han Sans SC", "PingFang SC";
+}
+
+.omnilist * {
+  display: inline;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.link-list {
+  /* font-size: 1.25em; */
+  margin: auto 0.25em;
+}
+
+.link-list a {
+  margin: auto 0.25em;
+}
+
+.article-list h2.year,
+.article-list h3.month,
+.article-list li {
+  margin-right: 0.25em;
+}
+
+.article-list h2.year {
+  /* margin: auto; */
+  /* margin-right: .25em; */
+  margin-left: 0.5em;
+}
+.article-list h2.year:first-of-type {
+  /* margin: initial; */
+}
+
+.article-list h3.month {
+  margin-right: 0em;
+  margin-left: 0.5em;
+  /* font-weight: normal; */
+}
+
+.article-list ul {
+  margin-top: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.article-list li {
+  /* display: inline; */
+  /* margin-right: 0.25em; */
+  margin: 0;
+}
+
+.article-list li a {
+  /* font-size: 1.5em; */
+  /* line-height: 1.5em; */
+  /* text-decoration: none; */
+  text-decoration: underline double;
+}
+.article-list a.multi-article-day {
+  margin-left: 0.5em;
+}
+.article-list li a:hover {
+  text-decoration: none;
+  /* color: #345678; */
+  color: #bbbbb7;
+  background-color: #233233;
+  /* font-family: STSong; */
+}
+
+.article-list .day {
+  /* margin-right: 0.25rem; */
+  margin-left: 0.5em;
+  font-weight: lighter;
+  /* font-size: 0.9em; */
+}
+
+@media screen and (max-width: 1200px) {
+  .omnilist {
+    font-size: 1rem;
+    margin: 5vh 5vw;
+    width: auto;
+  }
+
+  .article-list h2 {
+    /* margin-left: 1em; */
+  }
+}
+

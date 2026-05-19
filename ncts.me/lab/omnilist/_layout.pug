@@ -1,0 +1,12 @@
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		title= (title === undefined ? '' : title + ' | ') + 'Zen Currying'
+		block styles
+			link(href='/common/sanitize.css' rel='stylesheet')
+			link(href='/common/Barlow.css' rel='stylesheet')
+			link(href='base.css' rel='stylesheet')
+		block scripts
+	body
+		block content
