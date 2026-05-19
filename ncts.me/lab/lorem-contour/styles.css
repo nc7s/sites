@@ -1,0 +1,42 @@
+html,
+body {
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+.big-n {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	clip-path: url(mask.svg#one);
+	font-size: 1.25rem;
+}
+
+.big-n a,
+.big-n a:visited {
+	color: black;
+	font-weight: bold;
+}
+
+.cts {
+	position: fixed;
+	bottom: 0;
+	left: 50.25rem;
+	font-size: 1.25rem;
+}
+
+.content {
+	margin-left: 60rem;
+}
+
+p {
+	margin: 0;
+}
+
