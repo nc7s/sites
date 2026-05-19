@@ -15,7 +15,7 @@ const siteConfig = {
 	baseUrl: 'https://ncts.me',
 }
 const buildDir = '_build'
-const resourceExtensions = ['.css', '.js', '.webp', '.png', '.jpg', '.woff2']
+const resourceExtensions = ['.html', '.css', '.js', '.webp', '.png', '.jpg', '.woff2']
 
 const isDev = process.argv.includes('--dev')
 const host = process.env.HOST || 'localhost'
@@ -85,6 +85,10 @@ async function buildAll() {
 		.filter((p) => !ig.ignores(p) && lstatSync(p).isFile())
 	const pages = files.filter(p => p.endsWith('.md') || (p.endsWith('.pug') && !p.endsWith('.template.pug')))
 
+	for(const p of files.filter(p => resourceExtensions.some(e => p.endsWith(e)))) {
+		await writeToBuildDir(p, Bun.file(p))
+	}
+
 	// build standalone pages
 	for(const p of pages.filter(p => !isJiEntry(p))) {
 		await build(p, { pages })
@@ -119,10 +123,6 @@ async function buildAll() {
 		await build(p, { pages, _translation: meta?._translation })
 	}
 	await buildJiList(jiEntries)
-
-	for(const p of files.filter(p => resourceExtensions.some(e => p.endsWith(e)))) {
-		await writeToBuildDir(p, Bun.file(p))
-	}
 }
 
 function dev() {
