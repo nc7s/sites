@@ -1,0 +1,112 @@
+@import "npm:sanitize.css";
+@import "npm:@fontsource/barlow";
+
+* {
+  --accent: #04a7cc;
+  --base: #38393f;
+  --darkreader-text--base: var(--base);
+}
+
+body {
+  background-color: var(--base);
+}
+
+.namesake {
+  --primary: #aa2077;
+  position: absolute;
+  top: 10vh;
+  right: 20vw;
+  /* margin: 10vh 20vw auto auto; */
+  color: var(--primary);
+  font-family: Barlow;
+  font-size: 4rem;
+  line-height: 1em;
+  text-align: center;
+}
+
+.namesake {
+  width: calc(7 * (1em + 2px));
+  user-select: none;
+}
+
+.namesake div {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  /* border: 1px solid transparent; */
+  margin: 1px;
+}
+
+.standout,
+.standout.veil.flicker:hover {
+  color: var(--base);
+  text-shadow: var(--accent) 3px 1px, var(--accent) -3px 1px;
+}
+
+.standout.veil {
+  cursor: pointer;
+}
+
+.standout.flicker {
+  color: var(--base);
+  text-shadow: var(--accent) 1px 1px;
+}
+
+.standout.veil.wrong {
+  text-shadow: #ff0055 1px 1px;
+}
+
+.namesake div:active {
+  text-shadow: none;
+}
+
+.namesake :not(.standout) {
+  color: var(--base);
+  text-shadow: var(--primary) 3px 1px, var(--primary) -3px 1px;
+}
+
+.namesake :not(.standout).veil {
+  visibility: hidden;
+}
+
+.namesake :not(.standout).flicker {
+  visibility: visible;
+  color: var(--base);
+  text-shadow: var(--primary) 2px 1px;
+}
+
+.namesake .replay {
+  text-shadow: var(--primary) 2px 1px, var(--accent) 4px 1px;
+  cursor: wait;
+}
+
+.skip-button {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  width: 9rem;
+  height: 2em;
+  float: right;
+  background: none;
+  color: var(--primary);
+  font-weight: lighter;
+  text-align: center;
+  border: solid 1px var(--primary);
+  border-radius: 7px;
+}
+
+.skip-button:hover {
+  border: solid 2px var(--primary);
+  cursor: pointer;
+}
+
+.skip-button:active {
+  color: var(--accent);
+  background-color: var(--primary);
+}
+
+.skip-button.hidden {
+  visibility: hidden;
+}
+

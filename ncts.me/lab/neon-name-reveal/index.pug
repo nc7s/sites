@@ -1,0 +1,15 @@
+head
+	title ncts
+	link(href='styles.css' rel='stylesheet')
+	script(src='scripts.js' type='module')
+body
+	div.namesake
+		- let tiles = 'B _ N SL R O IA I C T'
+		- tiles = 'B I N TL R O IA _ C S'
+		- for(let c of tiles)
+			if 'NCTS'.includes(c)
+				div.standout= c
+			else if c === ' '
+				div.space= c
+			else
+				div.other= c
