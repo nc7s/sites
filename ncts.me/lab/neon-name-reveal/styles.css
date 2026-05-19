@@ -1,6 +1,3 @@
-@import "npm:sanitize.css";
-@import "npm:@fontsource/barlow";
-
 * {
   --accent: #04a7cc;
   --base: #38393f;
