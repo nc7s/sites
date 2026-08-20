@@ -10,7 +10,7 @@ import { lstatSync, Stats } from 'node:fs'
 
 const siteConfig = {
 	name: '墨原',
-	nameEnglish: 'Blair Noctis',
+	nameEnglish: 'Blair Nyktas',
 	handle: 'ncts',
 	baseUrl: 'https://ncts.me',
 }
@@ -295,7 +295,7 @@ async function buildJiList(files: string[]) {
 async function buildJiFeed(entries: Record<string, any>[]) {
 	const feed = new Feed({
 		title: '寄己集',
-		description: 'Colorless Ink — Blair Noctis',
+		description: `Colorless Ink - ${siteConfig.nameEnglish}`,
 		id: siteConfig.baseUrl + '/ji/',
 		link: siteConfig.baseUrl + '/ji/',
 		language: 'zh',
