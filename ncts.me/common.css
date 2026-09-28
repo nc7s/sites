@@ -30,6 +30,24 @@
 
 body {
 	font-family: var(--font-serif);
+	isolation: isolate;
+}
+
+/* Fade only the pattern; invert the black artwork for the dark background. */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	opacity: 0.03;
+	filter: invert(1);
+	background-image: url('/pattern-tile.svg');
+	/* Relative to the demo's 1/8 scale. */
+	--pattern-scale: 1;
+	background-size: calc(1628px * var(--pattern-scale)) calc(72px * var(--pattern-scale));
+	background-position: 0 0;
+	background-repeat: repeat;
 }
 
 /* SVG noise overlay for matte texture */
