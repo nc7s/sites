@@ -198,7 +198,7 @@ article .content figcaption {
 article .content blockquote {
 	border-left: 3px solid #333;
 	margin: 1.5rem 0;
-	padding: 0.5rem 1.2rem;
+	padding: 0 1.2rem;
 	color: #999;
 }
 
