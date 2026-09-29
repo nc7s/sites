@@ -4,6 +4,48 @@ body {
 	padding: clamp(1rem, 20vw, 20vh) clamp(1rem, calc((100vw - 80ic) / 2), 34vw);
 }
 
+.pattern-background {
+	opacity: 0.1;
+	--pattern-duration: 8s;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.pattern-background {
+		--pattern-column-width: calc(44px * var(--pattern-scale));
+		background-image: none;
+	}
+
+	.pattern-background::before,
+	.pattern-background::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: url('/pattern-tile.svg');
+		background-size: inherit;
+		animation: pattern-slide var(--pattern-duration) linear infinite;
+	}
+
+	/* Alternate columns independently of the SVG's 37-column repeat. */
+	.pattern-background::before {
+		mask-image: repeating-linear-gradient(to right,
+			#000 0 var(--pattern-column-width),
+			transparent var(--pattern-column-width) calc(2 * var(--pattern-column-width)));
+	}
+
+	.pattern-background::after {
+		mask-image: repeating-linear-gradient(to right,
+			transparent 0 var(--pattern-column-width),
+			#000 var(--pattern-column-width) calc(2 * var(--pattern-column-width)));
+		animation-direction: reverse;
+	}
+}
+
+@keyframes pattern-slide {
+	to {
+		background-position: 0 calc(-72px * var(--pattern-scale));
+	}
+}
+
 h1 {
 	margin: 0;
 	font-size: 2em;
