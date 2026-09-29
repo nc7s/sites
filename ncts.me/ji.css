@@ -119,19 +119,23 @@ article header .meta {
 	color: #666;
 }
 
+article header .meta :not(.alt) {
+	text-decoration: dotted underline;
+}
+
 article header .meta .entry-stats {
 	display: inline-block;
 	margin: 0 0.5rem;
 }
 
-article header .meta .entry-stats .alt {
+article header .meta .alt {
 	display: none;
 }
 
-article header .meta .entry-stats :not(.alt):active + .alt,
-article header .meta .entry-stats :not(.alt):focus + .alt,
-article header .meta .entry-stats :not(.alt):hover + .alt {
-	display: inherit;
+article header .meta :not(.alt):active + .alt,
+article header .meta :not(.alt):focus + .alt,
+article header .meta :not(.alt):hover + .alt {
+	display: inline-block;
 }
 
 article .content {

@@ -18,13 +18,16 @@ block body
 					.meta
 						time(datetime=formatDateISO(d))
 							= chineseYear(d) + ' ' + chineseMonth(d) + ' ' + d.getDate() + '日'
+						time.alt(datetime=formatDateISO(d))
+							= ' '
+							= formatDateISO(d)
 						if _translation
 							= ' '
 							a.translation(href=_translation.path)= _translation.lang
 						.entry-stats
 							span= '约' + estimated_words + '字词'
 							span.alt= ' ~' + estimated_words + ' words'
-							|  
+							= ' '
 							if writing_time
 								span= '写作时间约 ' + writing_time
 								span.alt= ' ~ ' + writing_time + ' in writing'
