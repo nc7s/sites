@@ -247,8 +247,41 @@ async function build(path: string, locals?: object) {
 	const templateName = frontMatter.template || (path.startsWith('ji/') ? 'ji_entry' : 'page')
 	const template = getTemplate(templateName)
 	const content = md.render(body)
-	const rendered = template({ ...siteConfig, ...templateHelpers, ...locals, ...frontMatter, content })
+	const entryStats = isJiEntry(path) ? {
+		estimated_words: Math.round(countEntryWords(body) / 100) * 100,
+		writing_time: frontMatter.writing_time,
+	} : {}
+	const rendered = template({ ...siteConfig, ...templateHelpers, ...locals, ...frontMatter, ...entryStats, content })
 	await writeToBuildDir(path, rendered)
+}
+
+function countEntryWords(body: string): number {
+	const text = markdownText(mdPlain.parse(body, {})).normalize('NFC')
+	/* Separate CJK characters while preserving whitespace-delimited Latin words. */
+	const cjk = /[\p{scx=Han}\p{scx=Hiragana}\p{scx=Katakana}\p{scx=Hangul}]\p{M}*/gu
+	return text.replace(cjk, ' $& ').split(/\s+/u).filter(word => /[\p{L}\p{N}]/u.test(word)).length
+}
+
+function markdownText(tokens: ReturnType<typeof mdPlain.parse>): string {
+	return tokens.map(token => {
+		if(token.children) {
+			const text = markdownText(token.children)
+			return token.type === 'inline' ? text + '\n' : text
+		}
+		switch(token.type) {
+			case 'text':
+			case 'code_inline':
+				return token.content
+			case 'code_block':
+			case 'fence':
+				return token.content + '\n'
+			case 'softbreak':
+			case 'hardbreak':
+				return '\n'
+			default:
+				return ''
+		}
+	}).join('')
 }
 
 async function buildJiList(files: string[]) {

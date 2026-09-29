@@ -115,8 +115,23 @@ article header h1 {
 	line-height: 1;
 }
 
-article header time {
+article header .meta {
 	color: #666;
+}
+
+article header .meta .entry-stats {
+	display: inline-block;
+	margin: 0 0.5rem;
+}
+
+article header .meta .entry-stats .alt {
+	display: none;
+}
+
+article header .meta .entry-stats :not(.alt):active + .alt,
+article header .meta .entry-stats :not(.alt):focus + .alt,
+article header .meta .entry-stats :not(.alt):hover + .alt {
+	display: inherit;
 }
 
 article .content {

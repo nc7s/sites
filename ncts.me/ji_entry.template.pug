@@ -15,10 +15,18 @@ block body
 				header
 					h1= title
 					- const d = new Date(date || created)
-					time(datetime=formatDateISO(d))
-						= chineseYear(d) + ' ' + chineseMonth(d) + ' ' + d.getDate() + '日'
-					if _translation
-						= ' '
-						a.translation(href=_translation.path)= _translation.lang
+					.meta
+						time(datetime=formatDateISO(d))
+							= chineseYear(d) + ' ' + chineseMonth(d) + ' ' + d.getDate() + '日'
+						if _translation
+							= ' '
+							a.translation(href=_translation.path)= _translation.lang
+						.entry-stats
+							span= '约' + estimated_words + '字词'
+							span.alt= ' ~' + estimated_words + ' words'
+							|  
+							if writing_time
+								span= '写作时间约 ' + writing_time
+								span.alt= ' ~ ' + writing_time + ' in writing'
 				.content!= content
 			include footer.template.pug
